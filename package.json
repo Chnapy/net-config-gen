@@ -1,0 +1,23 @@
+{
+  "name": "net-config-gen",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "node ./src/index.ts",
+    "gen:schema": "node ./src/generate-schema.ts",
+    "c:type": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@radically-straightforward/caddy": "^2.0.9",
+    "prettier": "^3.8.1",
+    "yaml": "^2.8.3",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@tsconfig/node22": "^22.0.5",
+    "@types/node": "^22.19.17",
+    "gatus-types": "^1.0.1",
+    "homenet-types": "github:Chnapy/homenet",
+    "typescript": "^6.0.2"
+  }
+}

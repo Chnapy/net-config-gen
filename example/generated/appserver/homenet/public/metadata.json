@@ -1,0 +1,38 @@
+{
+  "vps-ovh": {
+    "deviceId": "vps-ovh",
+    "name": "VPS",
+    "type": "cloud",
+    "theme": "yellow"
+  },
+  "nogent-router": {
+    "deviceId": "nogent-router",
+    "name": "Nogent router",
+    "type": "router",
+    "theme": "mauve"
+  },
+  "homelab": {
+    "deviceId": "homelab",
+    "name": "Homelab server",
+    "type": "server",
+    "theme": "blue"
+  },
+  "nogent-desktop": {
+    "deviceId": "nogent-desktop",
+    "name": "Nogent desktop",
+    "type": "desktop",
+    "theme": "default"
+  },
+  "boissy-livebox": {
+    "deviceId": "boissy-livebox",
+    "name": "Boissy livebox",
+    "type": "router",
+    "theme": "mauve"
+  },
+  "boissy-desktop": {
+    "deviceId": "boissy-desktop",
+    "name": "Boissy desktop",
+    "type": "desktop",
+    "theme": "default"
+  }
+}

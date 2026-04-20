@@ -1,0 +1,408 @@
+# yaml-language-server: $schema=../net.schema.yml
+
+networks:
+  - id: vps-ovh-network
+    name: VPS OVH-hosted network
+    description: VPS from OVH
+    wan_ip: 174.65.142.99
+    ddns: vps-8e52e112.vps.ovh.net
+    peers:
+      - id: vps-ovh
+        name: VPS
+        icon: debian-linux
+        description: VPS Linux Debian 13
+        type: cloud
+        vpn_ip: 100.100.100.1
+        network_entrypoint: true
+        access:
+          - type: ssh
+            port: 8087
+            expose_outside_vpn: true
+        services:
+          - id: wg-easy
+            name: Wireguard server (wg-easy)
+            icon: wireguard
+            description: VPN server with basic dashboard (wg-easy)
+            type: docker-container
+            role: vpn-server
+            lan_ip: 10.0.0.42
+            vpn_ip: 10.0.0.42
+            domain: wg.homelab.lan
+            access:
+              - type: udp
+                port: 51820
+                domain_port: 51820
+                domain: wg.homelab.io
+                expose_outside_vpn: true
+              - type: http
+                port: 100
+                domain: https://wg.homelab.io
+          - id: caddy
+            name: Caddy reverse-proxy
+            icon: caddy
+            description: Reverse-proxy with auto-https
+            type: docker-container
+            role: reverse-proxy
+            lan_ip: 10.0.0.42
+            vpn_ip: 10.0.0.42
+            domain: wg.homelab.lan
+            access:
+              - type: http
+                port: 80
+              - type: http
+                port: 443
+            generator:
+              type: caddy
+              paths:
+                Caddyfile: generated/vps/network/caddy/Caddyfile
+              email: example@mail.com
+          - id: dnsmasq
+            name: Dnsmasq DNS
+            icon: https://dnsmasq.org/images/icon.png
+            description: DNS server
+            type: docker-container
+            lan_ip: 10.0.0.20
+            vpn_ip: 10.0.0.20
+            access:
+              - port: 53
+            generator:
+              type: dnsmasq
+              paths:
+                dnsmasq.conf: generated/vps/network/dns/dnsmasq.conf
+              dns:
+                - 1.1.1.1
+                - 8.8.8.8
+              domains:
+                - domain: homelab.io
+                  service: caddy
+                  ip_to_use: lan
+                - domain: homelab.lan
+                  ip_to_use: vpn
+
+          - id: registry
+            name: Registry
+            icon: docker
+            description: Docker private registry
+            type: docker-container
+            lan_ip: 10.0.0.6
+            vpn_ip: 10.0.0.6
+            domain: registry.homelab.lan
+            access:
+              - type: http
+                port: 5000
+                domain: https://registry.homelab.io/v2/
+          - id: registry-ui
+            name: Registry UI
+            icon: docker
+            description: Docker registry UI
+            type: docker-container
+            lan_ip: 10.0.0.4
+            vpn_ip: 10.0.0.4
+            domain: registry-ui.homelab.lan
+            access:
+              - type: http
+                port: 80
+                domain: https://registry.homelab.io
+          - id: ntfy
+            name: ntfy
+            icon: ntfy
+            description: Centralized notification service
+            type: docker-container
+            lan_ip: 10.0.0.5
+            vpn_ip: 10.0.0.5
+            domain: ntfy.homelab.lan
+            access:
+              - type: http
+                port: 8080
+                domain: https://ntfy.homelab.io
+          - id: uptime
+            name: Uptime monitoring
+            icon: gatus
+            description: Gatus checking essential networks services uptime
+            type: docker-container
+            lan_ip: 10.0.0.3
+            vpn_ip: 10.0.0.3
+            domain: gatus.homelab.lan
+            access:
+              - type: http
+                port: 8080
+                domain: https://gatus.homelab.io
+            generator:
+              type: gatus
+              mode: partial
+              alerting:
+                service: ntfy
+                topic: uptime
+                token: $NTFY_TOKEN_UPTIME
+              ui:
+                header: Gatus - Chnapy's network
+                title: Health dashboard - Partial
+              paths:
+                config.yaml: generated/vps/main/uptime/config/config.yaml
+          - id: uptime-all
+            name: Uptime monitoring (all endpoints)
+            icon: gatus
+            description: Gatus checking all networks services uptime
+            type: docker-container
+            lan_ip: 10.0.0.7
+            vpn_ip: 10.0.0.7
+            domain: gatus-all.homelab.lan
+            access:
+              - type: http
+                port: 8080
+                domain: https://gatus-all.homelab.io
+            generator:
+              type: gatus
+              mode: all
+              ui:
+                header: Gatus - Chnapy's network
+                title: Health dashboard - Full
+              paths:
+                config.yaml: generated/vps/main/uptime/all/config.yaml
+          - id: homepage
+            name: Homepage
+            icon: homepage
+            description: Homepage dashboard
+            type: docker-container
+            lan_ip: 10.0.0.8
+            vpn_ip: 10.0.0.8
+            domain: homepage.homelab.lan
+            access:
+              - type: http
+                port: 3000
+                domain: https://homepage.homelab.io
+            generator:
+              type: homepage
+              paths:
+                services.yaml: generated/vps/main/homepage/config/services.yaml
+          - id: homepage-public
+            name: Homepage (public)
+            icon: homepage
+            description: Public access for Homepage dashboard
+            type: docker-container
+            lan_ip: 10.0.0.9
+            vpn_ip: 10.0.0.9
+            domain: homepage-public.homelab.lan
+            access:
+              - type: http
+                port: 4851
+                domain: https://homepage-public.homelab.io
+                expose_outside_vpn: true
+            generator:
+              type: homepage
+              safeMode: true
+              paths:
+                services.yaml: generated/vps/main/homepage/public-config/services.yaml
+
+  - id: nogent-network
+    name: Nogent network
+    description: Home network
+    wan_ip: 140.92.12.8
+    ddns: ss78e96.glddns.com
+    peers:
+      - id: nogent-router
+        name: Nogent router
+        icon: glinet
+        description: Network router (gl.inet AX1800 OpenWRT)
+        type: router
+        network_entrypoint: true
+        lan_ip: 192.168.20.1
+        services:
+          - id: nogent-router-admin-ui
+            name: Router admin UI
+            icon: glinet
+            description: gl.inet router admin interface
+            access:
+              - type: http
+                port: 443
+                domain: https://ss78e96.glddns.com
+                expose_outside_vpn: true
+      - id: homelab
+        name: Homelab server
+        icon: proxmox
+        description: Proxmox server for homelab projects
+        type: server
+        lan_ip: 192.168.20.138
+        services:
+          - id: proxmox-host
+            name: Proxmox admin UI
+            icon: proxmox
+            description: Proxmox host admin interface
+            lan_ip: 192.168.20.138
+            vpn_ip: 100.100.100.4
+            domain: proxmox.homelab.lan
+            access:
+              - type: http
+                port: 8006
+                ssl: true
+                domain: https://proxmox.homelab.io
+              - type: ssh
+                port: 22
+          - id: home-assistant
+            name: Home Assistant
+            icon: home-assistant
+            description: Home Assistant (VM)
+            type: proxmox-vm
+            lan_ip: 192.168.20.206
+            vpn_ip: 100.100.100.5
+            domain: homeassistant.homelab.lan
+            access:
+              - type: http
+                port: 8123
+                domain: https://homeassistant.homelab.io
+              - type: ssh
+                port: 8124
+            services:
+              - id: node-red
+                name: Node RED
+                icon: node-red
+                description: Node-RED low-code
+                type: docker-container
+                access:
+                  - type: http
+                    port: 1880
+                    domain: https://node-red.homelab.io
+              - id: zigbee2mqtt
+                name: Zigbee2MQTT
+                icon: zigbee2mqtt
+                description: Zigbee2MQTT interface
+                type: docker-container
+                access:
+                  - type: http
+                    port: 8099
+                    domain: https://zigbee.homelab.io
+          - id: appserver
+            name: Appserver
+            icon: docker
+            description: Domestic apps in docker-compose (LXC)
+            type: proxmox-lxc
+            lan_ip: 192.168.20.189
+            vpn_ip: 100.100.100.8
+            domain: appserver.homelab.lan
+            services:
+              - id: syncthing
+                name: Syncthing
+                icon: syncthing
+                description: Continuous file-sync tool
+                type: docker-container
+                access:
+                  - type: http
+                    port: 8384
+                    domain: https://syncthing.homelab.io
+              - id: pkvault
+                name: PKVault
+                icon: https://raw.githubusercontent.com/Chnapy/PKVault/refs/heads/main/frontend/public/logo.svg
+                description: Pokemon centralized storage and Pokedex tool
+                type: docker-container
+                access:
+                  - type: http
+                    port: 3000
+                    domain: https://pkvault.homelab.io
+              - id: pkvault-demo
+                name: PKVault (demo)
+                icon: https://raw.githubusercontent.com/Chnapy/PKVault/refs/heads/main/frontend/public/logo.svg
+                description: Public demo of PKVault
+                type: docker-container
+                access:
+                  - type: http
+                    port: 5974
+                    domain: https://pkvault-demo.homelab.io
+                    expose_outside_vpn: true
+              - id: homenet
+                name: Homenet
+                icon: https://raw.githubusercontent.com/Chnapy/homenet/refs/heads/main/frontend/public/hn-logo.svg
+                description: Network diagram flow-based
+                type: docker-container
+                access:
+                  - type: http
+                    port: 3010
+                    domain: https://homenet.homelab.io
+                generator:
+                  type: homenet
+                  themes:
+                    ["yellow", "mauve", "blue", "default", "mauve", "default"]
+                  paths:
+                    devices.json: generated/appserver/homenet/private/devices.json
+                    metadata.json: generated/appserver/homenet/private/metadata.json
+              - id: homenet-public
+                name: Homenet (public)
+                icon: https://raw.githubusercontent.com/Chnapy/homenet/refs/heads/main/frontend/public/hn-logo.svg
+                description: Public anonymized access of Homenet
+                type: docker-container
+                access:
+                  - type: http
+                    port: 9647
+                    domain: https://homenet-public.homelab.io
+                    expose_outside_vpn: true
+                generator:
+                  anonymize_network: true
+                  type: homenet
+                  safeMode: true
+                  themes:
+                    ["yellow", "mauve", "blue", "default", "mauve", "default"]
+                  paths:
+                    devices.json: generated/appserver/homenet/public/devices.json
+                    metadata.json: generated/appserver/homenet/public/metadata.json
+              - id: timeflies
+                name: Timeflies
+                icon: https://raw.githubusercontent.com/Chnapy/timeflies/refs/heads/master/packages/frontend/public/logo64.png
+                description: Web multiplayer game - tactical-RPG
+                type: docker-container
+                access:
+                  - type: http
+                    port: 8448
+                    domain: https://timeflies.homelab.io
+                    expose_outside_vpn: true
+
+      - id: nogent-desktop
+        name: Nogent desktop
+        icon: windows-10
+        description: Windows desktop PC
+        type: desktop
+        lan_ip: 192.168.20.147
+        vpn_ip: 100.100.100.2
+        domain: desktop.homelab.lan
+        services:
+          - id: sunshine
+            name: Sunshine
+            icon: sunshine
+            description: Sunshine for stream gaming host
+            access:
+              - type: http
+                port: 47990
+                ssl: true
+              - type: tcp
+                port: 45743
+                expose_outside_vpn: true
+                port_forward: true
+
+  - id: boissy-network
+    name: Boissy network
+    description: Boissy network
+    wan_ip: 187.45.120.5
+    peers:
+      - id: boissy-livebox
+        name: Boissy livebox
+        icon: orange
+        description: Orange Box router
+        type: router
+        network_entrypoint: true
+        lan_ip: 192.168.5.1
+        services:
+          - id: boissy-livebox-admin-ui
+            name: Livebox admin UI
+            icon: orange
+            description: Admin interface
+            access:
+              - type: http
+                ssl: true
+                port: 12475
+                expose_outside_vpn: true
+      - id: boissy-desktop
+        name: Boissy desktop
+        icon: windows-10
+        description: Windows desktop PC
+        type: desktop
+        lan_ip: 192.168.5.16
+        vpn_ip: 100.100.100.6
+        domain: boissy-desktop.homelab.lan

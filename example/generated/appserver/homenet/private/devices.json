@@ -1,0 +1,1628 @@
+{
+  "deviceList": [
+    {
+      "id": "vps-ovh",
+      "type": "DOCKER",
+      "os": "UNRECOGNIZED",
+      "wan": "174.65.142.99",
+      "ddns": "vps-8e52e112.vps.ovh.net",
+      "lan": "10.0.0.42",
+      "dhcp": [],
+      "ssh": {
+        "ports": [
+          8087
+        ]
+      },
+      "web": [],
+      "meta": {
+        "name": "VPS",
+        "description": "VPS Linux Debian 13",
+        "icon": "debian-linux"
+      }
+    },
+    {
+      "id": "nogent-router",
+      "type": "DEVICE",
+      "os": "UNRECOGNIZED",
+      "wan": "140.92.12.8",
+      "ddns": "ss78e96.glddns.com",
+      "lan": "192.168.20.1",
+      "dhcp": [],
+      "web": [],
+      "meta": {
+        "name": "Nogent router",
+        "description": "Network router (gl.inet AX1800 OpenWRT)",
+        "icon": "glinet"
+      }
+    },
+    {
+      "id": "homelab",
+      "type": "PROXMOX",
+      "os": "PROXMOX",
+      "lan": "192.168.20.138",
+      "dhcp": [],
+      "web": [],
+      "meta": {
+        "name": "Homelab server",
+        "description": "Proxmox server for homelab projects",
+        "icon": "proxmox"
+      }
+    },
+    {
+      "id": "nogent-desktop",
+      "type": "DEVICE",
+      "os": "UNRECOGNIZED",
+      "lan": "192.168.20.147",
+      "dhcp": [],
+      "web": [],
+      "meta": {
+        "name": "Nogent desktop",
+        "description": "Windows desktop PC",
+        "icon": "windows-10"
+      }
+    },
+    {
+      "id": "boissy-livebox",
+      "type": "DEVICE",
+      "os": "UNRECOGNIZED",
+      "wan": "187.45.120.5",
+      "lan": "192.168.5.1",
+      "dhcp": [],
+      "web": [],
+      "meta": {
+        "name": "Boissy livebox",
+        "description": "Orange Box router",
+        "icon": "orange"
+      }
+    },
+    {
+      "id": "boissy-desktop",
+      "type": "DEVICE",
+      "os": "UNRECOGNIZED",
+      "lan": "192.168.5.16",
+      "dhcp": [],
+      "web": [],
+      "meta": {
+        "name": "Boissy desktop",
+        "description": "Windows desktop PC",
+        "icon": "windows-10"
+      }
+    }
+  ],
+  "instanceList": [
+    {
+      "parentId": "vps-ovh",
+      "id": "vps-ovh-docker",
+      "type": "DOCKER",
+      "os": "DOCKER",
+      "lan": "10.0.0.42",
+      "dhcp": [],
+      "web": [],
+      "meta": {
+        "name": "Docker compose",
+        "description": ""
+      }
+    },
+    {
+      "parentId": "homelab",
+      "id": "home-assistant",
+      "type": "PROXMOX",
+      "os": "PROXMOX",
+      "lan": "192.168.20.206",
+      "dhcp": [],
+      "web": [],
+      "meta": {
+        "name": "Home Assistant",
+        "description": "Home Assistant (VM)",
+        "icon": "home-assistant"
+      }
+    },
+    {
+      "parentId": "homelab",
+      "id": "appserver",
+      "type": "PROXMOX",
+      "os": "PROXMOX",
+      "lan": "192.168.20.189",
+      "dhcp": [],
+      "web": [],
+      "meta": {
+        "name": "Appserver",
+        "description": "Domestic apps in docker-compose (LXC)",
+        "icon": "docker"
+      }
+    }
+  ],
+  "appList": [
+    {
+      "parentId": "vps-ovh-docker",
+      "id": "wg-easy",
+      "slug": "WIREGUARD",
+      "vpnMode": "SERVER",
+      "vpnAddress": "10.0.0.42",
+      "vpnClients": [
+        "10.0.0.42",
+        "10.0.0.20",
+        "10.0.0.6",
+        "10.0.0.4",
+        "10.0.0.5",
+        "10.0.0.3",
+        "10.0.0.7",
+        "10.0.0.8",
+        "10.0.0.9",
+        "100.100.100.4",
+        "100.100.100.5",
+        "100.100.100.5",
+        "100.100.100.5",
+        "100.100.100.8",
+        "100.100.100.8",
+        "100.100.100.8",
+        "100.100.100.8",
+        "100.100.100.8",
+        "100.100.100.8",
+        "100.100.100.8",
+        "100.100.100.2"
+      ],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "Wireguard server (wg-easy)",
+        "description": "VPN server with basic dashboard (wg-easy)",
+        "icon": "wireguard"
+      }
+    },
+    {
+      "parentId": "vps-ovh-docker",
+      "id": "caddy",
+      "slug": "caddy",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "10.0.0.42",
+      "vpnClients": [],
+      "reverseProxy": [
+        {
+          "fromDomain": {
+            "domain": "wg.homelab.io",
+            "ssl": false
+          },
+          "toAddress": {
+            "address": "10.0.0.42",
+            "ssl": false,
+            "port": 51820
+          }
+        },
+        {
+          "fromDomain": {
+            "domain": "https://wg.homelab.io",
+            "ssl": true
+          },
+          "toAddress": {
+            "address": "10.0.0.42",
+            "ssl": false,
+            "port": 100
+          }
+        },
+        {
+          "fromDomain": {
+            "domain": "https://registry.homelab.io/v2/",
+            "ssl": true
+          },
+          "toAddress": {
+            "address": "10.0.0.6",
+            "ssl": false,
+            "port": 5000
+          }
+        },
+        {
+          "fromDomain": {
+            "domain": "https://registry.homelab.io",
+            "ssl": true
+          },
+          "toAddress": {
+            "address": "10.0.0.4",
+            "ssl": false,
+            "port": 80
+          }
+        },
+        {
+          "fromDomain": {
+            "domain": "https://ntfy.homelab.io",
+            "ssl": true
+          },
+          "toAddress": {
+            "address": "10.0.0.5",
+            "ssl": false,
+            "port": 8080
+          }
+        },
+        {
+          "fromDomain": {
+            "domain": "https://gatus.homelab.io",
+            "ssl": true
+          },
+          "toAddress": {
+            "address": "10.0.0.3",
+            "ssl": false,
+            "port": 8080
+          }
+        },
+        {
+          "fromDomain": {
+            "domain": "https://gatus-all.homelab.io",
+            "ssl": true
+          },
+          "toAddress": {
+            "address": "10.0.0.7",
+            "ssl": false,
+            "port": 8080
+          }
+        },
+        {
+          "fromDomain": {
+            "domain": "https://homepage.homelab.io",
+            "ssl": true
+          },
+          "toAddress": {
+            "address": "10.0.0.8",
+            "ssl": false,
+            "port": 3000
+          }
+        },
+        {
+          "fromDomain": {
+            "domain": "https://homepage-public.homelab.io",
+            "ssl": true
+          },
+          "toAddress": {
+            "address": "10.0.0.9",
+            "ssl": false,
+            "port": 4851
+          }
+        },
+        {
+          "fromDomain": {
+            "domain": "https://ss78e96.glddns.com",
+            "ssl": true
+          },
+          "toAddress": {
+            "address": "192.168.20.1",
+            "ssl": false,
+            "port": 443
+          }
+        },
+        {
+          "fromDomain": {
+            "domain": "https://proxmox.homelab.io",
+            "ssl": true
+          },
+          "toAddress": {
+            "address": "100.100.100.4",
+            "ssl": true,
+            "port": 8006
+          }
+        },
+        {
+          "fromDomain": {
+            "domain": "https://homeassistant.homelab.io",
+            "ssl": true
+          },
+          "toAddress": {
+            "address": "100.100.100.5",
+            "ssl": false,
+            "port": 8123
+          }
+        },
+        {
+          "fromDomain": {
+            "domain": "https://node-red.homelab.io",
+            "ssl": true
+          },
+          "toAddress": {
+            "address": "100.100.100.5",
+            "ssl": false,
+            "port": 1880
+          }
+        },
+        {
+          "fromDomain": {
+            "domain": "https://zigbee.homelab.io",
+            "ssl": true
+          },
+          "toAddress": {
+            "address": "100.100.100.5",
+            "ssl": false,
+            "port": 8099
+          }
+        },
+        {
+          "fromDomain": {
+            "domain": "https://syncthing.homelab.io",
+            "ssl": true
+          },
+          "toAddress": {
+            "address": "100.100.100.8",
+            "ssl": false,
+            "port": 8384
+          }
+        },
+        {
+          "fromDomain": {
+            "domain": "https://pkvault.homelab.io",
+            "ssl": true
+          },
+          "toAddress": {
+            "address": "100.100.100.8",
+            "ssl": false,
+            "port": 3000
+          }
+        },
+        {
+          "fromDomain": {
+            "domain": "https://pkvault-demo.homelab.io",
+            "ssl": true
+          },
+          "toAddress": {
+            "address": "100.100.100.8",
+            "ssl": false,
+            "port": 5974
+          }
+        },
+        {
+          "fromDomain": {
+            "domain": "https://homenet.homelab.io",
+            "ssl": true
+          },
+          "toAddress": {
+            "address": "100.100.100.8",
+            "ssl": false,
+            "port": 3010
+          }
+        },
+        {
+          "fromDomain": {
+            "domain": "https://homenet-public.homelab.io",
+            "ssl": true
+          },
+          "toAddress": {
+            "address": "100.100.100.8",
+            "ssl": false,
+            "port": 9647
+          }
+        },
+        {
+          "fromDomain": {
+            "domain": "https://timeflies.homelab.io",
+            "ssl": true
+          },
+          "toAddress": {
+            "address": "100.100.100.8",
+            "ssl": false,
+            "port": 8448
+          }
+        }
+      ],
+      "web": [],
+      "meta": {
+        "name": "Caddy reverse-proxy",
+        "description": "Reverse-proxy with auto-https",
+        "icon": "caddy"
+      }
+    },
+    {
+      "parentId": "vps-ovh-docker",
+      "id": "dnsmasq",
+      "slug": "dnsmasq",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "10.0.0.20",
+      "vpnClients": [],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "Dnsmasq DNS",
+        "description": "DNS server",
+        "icon": "https://dnsmasq.org/images/icon.png"
+      }
+    },
+    {
+      "parentId": "vps-ovh-docker",
+      "id": "registry",
+      "slug": "registry",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "10.0.0.6",
+      "vpnClients": [],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "Registry",
+        "description": "Docker private registry",
+        "icon": "docker"
+      }
+    },
+    {
+      "parentId": "vps-ovh-docker",
+      "id": "registry-ui",
+      "slug": "registry-ui",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "10.0.0.4",
+      "vpnClients": [],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "Registry UI",
+        "description": "Docker registry UI",
+        "icon": "docker"
+      }
+    },
+    {
+      "parentId": "vps-ovh-docker",
+      "id": "ntfy",
+      "slug": "ntfy",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "10.0.0.5",
+      "vpnClients": [],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "ntfy",
+        "description": "Centralized notification service",
+        "icon": "ntfy"
+      }
+    },
+    {
+      "parentId": "vps-ovh-docker",
+      "id": "uptime",
+      "slug": "uptime",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "10.0.0.3",
+      "vpnClients": [],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "Uptime monitoring",
+        "description": "Gatus checking essential networks services uptime",
+        "icon": "gatus"
+      }
+    },
+    {
+      "parentId": "vps-ovh-docker",
+      "id": "uptime-all",
+      "slug": "uptime-all",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "10.0.0.7",
+      "vpnClients": [],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "Uptime monitoring (all endpoints)",
+        "description": "Gatus checking all networks services uptime",
+        "icon": "gatus"
+      }
+    },
+    {
+      "parentId": "vps-ovh-docker",
+      "id": "homepage",
+      "slug": "homepage",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "10.0.0.8",
+      "vpnClients": [],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "Homepage",
+        "description": "Homepage dashboard",
+        "icon": "homepage"
+      }
+    },
+    {
+      "parentId": "vps-ovh-docker",
+      "id": "homepage-public",
+      "slug": "homepage-public",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "10.0.0.9",
+      "vpnClients": [],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "Homepage (public)",
+        "description": "Public access for Homepage dashboard",
+        "icon": "homepage"
+      }
+    },
+    {
+      "parentId": "nogent-router",
+      "id": "nogent-router-admin-ui",
+      "slug": "nogent-router-admin-ui",
+      "vpnMode": "UNRECOGNIZED",
+      "vpnClients": [],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "Router admin UI",
+        "description": "gl.inet router admin interface",
+        "icon": "glinet"
+      }
+    },
+    {
+      "parentId": "homelab",
+      "id": "proxmox-host",
+      "slug": "proxmox-host",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "100.100.100.4",
+      "vpnClients": [],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "Proxmox admin UI",
+        "description": "Proxmox host admin interface",
+        "icon": "proxmox"
+      }
+    },
+    {
+      "parentId": "home-assistant",
+      "id": "node-red",
+      "slug": "node-red",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "100.100.100.5",
+      "vpnClients": [],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "Node RED",
+        "description": "Node-RED low-code",
+        "icon": "node-red"
+      }
+    },
+    {
+      "parentId": "home-assistant",
+      "id": "zigbee2mqtt",
+      "slug": "zigbee2mqtt",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "100.100.100.5",
+      "vpnClients": [],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "Zigbee2MQTT",
+        "description": "Zigbee2MQTT interface",
+        "icon": "zigbee2mqtt"
+      }
+    },
+    {
+      "parentId": "appserver",
+      "id": "syncthing",
+      "slug": "syncthing",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "100.100.100.8",
+      "vpnClients": [],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "Syncthing",
+        "description": "Continuous file-sync tool",
+        "icon": "syncthing"
+      }
+    },
+    {
+      "parentId": "appserver",
+      "id": "pkvault",
+      "slug": "pkvault",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "100.100.100.8",
+      "vpnClients": [],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "PKVault",
+        "description": "Pokemon centralized storage and Pokedex tool",
+        "icon": "https://raw.githubusercontent.com/Chnapy/PKVault/refs/heads/main/frontend/public/logo.svg"
+      }
+    },
+    {
+      "parentId": "appserver",
+      "id": "pkvault-demo",
+      "slug": "pkvault-demo",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "100.100.100.8",
+      "vpnClients": [],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "PKVault (demo)",
+        "description": "Public demo of PKVault",
+        "icon": "https://raw.githubusercontent.com/Chnapy/PKVault/refs/heads/main/frontend/public/logo.svg"
+      }
+    },
+    {
+      "parentId": "appserver",
+      "id": "homenet",
+      "slug": "HOMENET",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "100.100.100.8",
+      "vpnClients": [],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "Homenet",
+        "description": "Network diagram flow-based",
+        "icon": "https://raw.githubusercontent.com/Chnapy/homenet/refs/heads/main/frontend/public/hn-logo.svg"
+      }
+    },
+    {
+      "parentId": "appserver",
+      "id": "homenet-public",
+      "slug": "homenet-public",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "100.100.100.8",
+      "vpnClients": [],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "Homenet (public)",
+        "description": "Public anonymized access of Homenet",
+        "icon": "https://raw.githubusercontent.com/Chnapy/homenet/refs/heads/main/frontend/public/hn-logo.svg"
+      }
+    },
+    {
+      "parentId": "appserver",
+      "id": "timeflies",
+      "slug": "timeflies",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "100.100.100.8",
+      "vpnClients": [],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "Timeflies",
+        "description": "Web multiplayer game - tactical-RPG",
+        "icon": "https://raw.githubusercontent.com/Chnapy/timeflies/refs/heads/master/packages/frontend/public/logo64.png"
+      }
+    },
+    {
+      "parentId": "nogent-desktop",
+      "id": "sunshine",
+      "slug": "sunshine",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "100.100.100.2",
+      "vpnClients": [],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "Sunshine",
+        "description": "Sunshine for stream gaming host",
+        "icon": "sunshine"
+      }
+    },
+    {
+      "parentId": "boissy-livebox",
+      "id": "boissy-livebox-admin-ui",
+      "slug": "boissy-livebox-admin-ui",
+      "vpnMode": "UNRECOGNIZED",
+      "vpnClients": [],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "Livebox admin UI",
+        "description": "Admin interface",
+        "icon": "orange"
+      }
+    }
+  ],
+  "agentMetadataList": [],
+  "netEntityMap": {
+    "vps-ovh": {
+      "id": "vps-ovh",
+      "addressList": [
+        {
+          "type": "address-only",
+          "scope": "lan",
+          "address": "10.0.0.42"
+        },
+        {
+          "type": "address-only",
+          "scope": "vpn",
+          "address": "100.100.100.1"
+        },
+        {
+          "type": "address-only",
+          "scope": "wan",
+          "address": "174.65.142.99"
+        },
+        {
+          "type": "address-only",
+          "scope": "dns-domain",
+          "address": "vps-8e52e112.vps.ovh.net"
+        }
+      ],
+      "lan": "10.0.0.42",
+      "wan": "174.65.142.99",
+      "ddns": "vps-8e52e112.vps.ovh.net",
+      "vpn": "100.100.100.1",
+      "os": [],
+      "apps": {
+        "UNRECOGNIZED": []
+      }
+    },
+    "vps-ovh-docker": {
+      "id": "vps-ovh-docker",
+      "addressList": [
+        {
+          "type": "address-only",
+          "scope": "lan",
+          "address": "10.0.0.42"
+        },
+        {
+          "type": "address-only",
+          "scope": "vpn",
+          "address": "100.100.100.1"
+        }
+      ],
+      "lan": "10.0.0.42",
+      "vpn": "100.100.100.1",
+      "os": [],
+      "apps": {
+        "DOCKER": [],
+        "WIREGUARD": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "WIREGUARD",
+            "address": "https://wg.homelab.io",
+            "href": "https://wg.homelab.io",
+            "port": 100
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "WIREGUARD",
+            "address": "wg.homelab.lan",
+            "href": "http://wg.homelab.lan:100",
+            "port": 100
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "WIREGUARD",
+            "address": "10.0.0.42",
+            "href": "http://10.0.0.42:100",
+            "port": 100
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "WIREGUARD",
+            "address": "10.0.0.42",
+            "href": "http://10.0.0.42:100",
+            "port": 100
+          }
+        ],
+        "caddy": [],
+        "dnsmasq": [],
+        "registry": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "registry",
+            "address": "https://registry.homelab.io/v2/",
+            "href": "https://registry.homelab.io/v2/",
+            "port": 5000
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "registry",
+            "address": "registry.homelab.lan",
+            "href": "http://registry.homelab.lan:5000",
+            "port": 5000
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "registry",
+            "address": "10.0.0.6",
+            "href": "http://10.0.0.6:5000",
+            "port": 5000
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "registry",
+            "address": "10.0.0.6",
+            "href": "http://10.0.0.6:5000",
+            "port": 5000
+          }
+        ],
+        "registry-ui": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "registry-ui",
+            "address": "https://registry.homelab.io",
+            "href": "https://registry.homelab.io",
+            "port": 80
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "registry-ui",
+            "address": "registry-ui.homelab.lan",
+            "href": "http://registry-ui.homelab.lan",
+            "port": 80
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "registry-ui",
+            "address": "10.0.0.4",
+            "href": "http://10.0.0.4",
+            "port": 80
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "registry-ui",
+            "address": "10.0.0.4",
+            "href": "http://10.0.0.4",
+            "port": 80
+          }
+        ],
+        "ntfy": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "ntfy",
+            "address": "https://ntfy.homelab.io",
+            "href": "https://ntfy.homelab.io",
+            "port": 8080
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "ntfy",
+            "address": "ntfy.homelab.lan",
+            "href": "http://ntfy.homelab.lan:8080",
+            "port": 8080
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "ntfy",
+            "address": "10.0.0.5",
+            "href": "http://10.0.0.5:8080",
+            "port": 8080
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "ntfy",
+            "address": "10.0.0.5",
+            "href": "http://10.0.0.5:8080",
+            "port": 8080
+          }
+        ],
+        "uptime": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "uptime",
+            "address": "https://gatus.homelab.io",
+            "href": "https://gatus.homelab.io",
+            "port": 8080
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "uptime",
+            "address": "gatus.homelab.lan",
+            "href": "http://gatus.homelab.lan:8080",
+            "port": 8080
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "uptime",
+            "address": "10.0.0.3",
+            "href": "http://10.0.0.3:8080",
+            "port": 8080
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "uptime",
+            "address": "10.0.0.3",
+            "href": "http://10.0.0.3:8080",
+            "port": 8080
+          }
+        ],
+        "uptime-all": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "uptime-all",
+            "address": "https://gatus-all.homelab.io",
+            "href": "https://gatus-all.homelab.io",
+            "port": 8080
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "uptime-all",
+            "address": "gatus-all.homelab.lan",
+            "href": "http://gatus-all.homelab.lan:8080",
+            "port": 8080
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "uptime-all",
+            "address": "10.0.0.7",
+            "href": "http://10.0.0.7:8080",
+            "port": 8080
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "uptime-all",
+            "address": "10.0.0.7",
+            "href": "http://10.0.0.7:8080",
+            "port": 8080
+          }
+        ],
+        "homepage": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "homepage",
+            "address": "https://homepage.homelab.io",
+            "href": "https://homepage.homelab.io",
+            "port": 3000
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "homepage",
+            "address": "homepage.homelab.lan",
+            "href": "http://homepage.homelab.lan:3000",
+            "port": 3000
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "homepage",
+            "address": "10.0.0.8",
+            "href": "http://10.0.0.8:3000",
+            "port": 3000
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "homepage",
+            "address": "10.0.0.8",
+            "href": "http://10.0.0.8:3000",
+            "port": 3000
+          }
+        ],
+        "homepage-public": [
+          {
+            "type": "web",
+            "scope": "wan",
+            "appSlug": "homepage-public",
+            "address": "https://homepage-public.homelab.io",
+            "href": "https://homepage-public.homelab.io",
+            "port": 4851
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "homepage-public",
+            "address": "homepage-public.homelab.lan",
+            "href": "http://homepage-public.homelab.lan:4851",
+            "port": 4851
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "homepage-public",
+            "address": "10.0.0.9",
+            "href": "http://10.0.0.9:4851",
+            "port": 4851
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "homepage-public",
+            "address": "10.0.0.9",
+            "href": "http://10.0.0.9:4851",
+            "port": 4851
+          }
+        ]
+      }
+    },
+    "nogent-router": {
+      "id": "nogent-router",
+      "addressList": [
+        {
+          "type": "address-only",
+          "scope": "lan",
+          "address": "192.168.20.1"
+        },
+        {
+          "type": "address-only",
+          "scope": "wan",
+          "address": "140.92.12.8"
+        },
+        {
+          "type": "address-only",
+          "scope": "dns-domain",
+          "address": "ss78e96.glddns.com"
+        }
+      ],
+      "lan": "192.168.20.1",
+      "wan": "140.92.12.8",
+      "ddns": "ss78e96.glddns.com",
+      "os": [],
+      "apps": {
+        "UNRECOGNIZED": [],
+        "nogent-router-admin-ui": [
+          {
+            "type": "web",
+            "scope": "wan",
+            "appSlug": "nogent-router-admin-ui",
+            "address": "https://ss78e96.glddns.com",
+            "href": "https://ss78e96.glddns.com",
+            "port": 443
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "nogent-router-admin-ui",
+            "address": "192.168.20.1",
+            "href": "https://192.168.20.1",
+            "port": 443
+          }
+        ]
+      }
+    },
+    "homelab": {
+      "id": "homelab",
+      "addressList": [
+        {
+          "type": "address-only",
+          "scope": "lan",
+          "address": "192.168.20.138"
+        }
+      ],
+      "lan": "192.168.20.138",
+      "os": [],
+      "apps": {
+        "PROXMOX": [],
+        "proxmox-host": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "proxmox-host",
+            "address": "https://proxmox.homelab.io",
+            "href": "https://proxmox.homelab.io",
+            "ssl": true,
+            "port": 8006
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "proxmox-host",
+            "address": "proxmox.homelab.lan",
+            "href": "https://proxmox.homelab.lan:8006",
+            "ssl": true,
+            "port": 8006
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "proxmox-host",
+            "address": "100.100.100.4",
+            "href": "https://100.100.100.4:8006",
+            "ssl": true,
+            "port": 8006
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "proxmox-host",
+            "address": "192.168.20.138",
+            "href": "https://192.168.20.138:8006",
+            "ssl": true,
+            "port": 8006
+          },
+          {
+            "type": "ssh",
+            "scope": "vpn",
+            "appSlug": "proxmox-host",
+            "address": "proxmox.homelab.lan",
+            "href": "ssh://proxmox.homelab.lan",
+            "port": 22
+          },
+          {
+            "type": "ssh",
+            "scope": "vpn",
+            "appSlug": "proxmox-host",
+            "address": "100.100.100.4",
+            "href": "ssh://100.100.100.4",
+            "port": 22
+          },
+          {
+            "type": "ssh",
+            "scope": "lan",
+            "appSlug": "proxmox-host",
+            "address": "192.168.20.138",
+            "href": "ssh://192.168.20.138",
+            "port": 22
+          }
+        ]
+      }
+    },
+    "home-assistant": {
+      "id": "home-assistant",
+      "addressList": [
+        {
+          "type": "address-only",
+          "scope": "lan",
+          "address": "192.168.20.206"
+        },
+        {
+          "type": "address-only",
+          "scope": "vpn",
+          "address": "100.100.100.5"
+        }
+      ],
+      "lan": "192.168.20.206",
+      "vpn": "100.100.100.5",
+      "os": [
+        {
+          "type": "web",
+          "scope": "vpn",
+          "address": "https://homeassistant.homelab.io",
+          "href": "https://homeassistant.homelab.io",
+          "port": 8123
+        },
+        {
+          "type": "web",
+          "scope": "wan",
+          "address": "homeassistant.homelab.lan",
+          "href": "http://homeassistant.homelab.lan:8123",
+          "port": 8123
+        },
+        {
+          "type": "web",
+          "scope": "vpn",
+          "address": "100.100.100.5",
+          "href": "http://100.100.100.5:8123",
+          "port": 8123
+        },
+        {
+          "type": "web",
+          "scope": "lan",
+          "address": "192.168.20.206",
+          "href": "http://192.168.20.206:8123",
+          "port": 8123
+        },
+        {
+          "type": "ssh",
+          "scope": "wan",
+          "address": "homeassistant.homelab.lan",
+          "href": "ssh://homeassistant.homelab.lan:8124",
+          "port": 8124
+        },
+        {
+          "type": "ssh",
+          "scope": "vpn",
+          "address": "100.100.100.5",
+          "href": "ssh://100.100.100.5:8124",
+          "port": 8124
+        },
+        {
+          "type": "ssh",
+          "scope": "lan",
+          "address": "192.168.20.206",
+          "href": "ssh://192.168.20.206:8124",
+          "port": 8124
+        }
+      ],
+      "apps": {
+        "PROXMOX": [],
+        "node-red": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "node-red",
+            "address": "https://node-red.homelab.io",
+            "href": "https://node-red.homelab.io",
+            "port": 1880
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "node-red",
+            "address": "homeassistant.homelab.lan",
+            "href": "http://homeassistant.homelab.lan:1880",
+            "port": 1880
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "node-red",
+            "address": "100.100.100.5",
+            "href": "http://100.100.100.5:1880",
+            "port": 1880
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "node-red",
+            "address": "192.168.20.206",
+            "href": "http://192.168.20.206:1880",
+            "port": 1880
+          }
+        ],
+        "zigbee2mqtt": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "zigbee2mqtt",
+            "address": "https://zigbee.homelab.io",
+            "href": "https://zigbee.homelab.io",
+            "port": 8099
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "zigbee2mqtt",
+            "address": "homeassistant.homelab.lan",
+            "href": "http://homeassistant.homelab.lan:8099",
+            "port": 8099
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "zigbee2mqtt",
+            "address": "100.100.100.5",
+            "href": "http://100.100.100.5:8099",
+            "port": 8099
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "zigbee2mqtt",
+            "address": "192.168.20.206",
+            "href": "http://192.168.20.206:8099",
+            "port": 8099
+          }
+        ]
+      }
+    },
+    "appserver": {
+      "id": "appserver",
+      "addressList": [
+        {
+          "type": "address-only",
+          "scope": "lan",
+          "address": "192.168.20.189"
+        },
+        {
+          "type": "address-only",
+          "scope": "vpn",
+          "address": "100.100.100.8"
+        }
+      ],
+      "lan": "192.168.20.189",
+      "vpn": "100.100.100.8",
+      "os": [],
+      "apps": {
+        "PROXMOX": [],
+        "syncthing": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "syncthing",
+            "address": "https://syncthing.homelab.io",
+            "href": "https://syncthing.homelab.io",
+            "port": 8384
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "syncthing",
+            "address": "appserver.homelab.lan",
+            "href": "http://appserver.homelab.lan:8384",
+            "port": 8384
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "syncthing",
+            "address": "100.100.100.8",
+            "href": "http://100.100.100.8:8384",
+            "port": 8384
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "syncthing",
+            "address": "192.168.20.189",
+            "href": "http://192.168.20.189:8384",
+            "port": 8384
+          }
+        ],
+        "pkvault": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "pkvault",
+            "address": "https://pkvault.homelab.io",
+            "href": "https://pkvault.homelab.io",
+            "port": 3000
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "pkvault",
+            "address": "appserver.homelab.lan",
+            "href": "http://appserver.homelab.lan:3000",
+            "port": 3000
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "pkvault",
+            "address": "100.100.100.8",
+            "href": "http://100.100.100.8:3000",
+            "port": 3000
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "pkvault",
+            "address": "192.168.20.189",
+            "href": "http://192.168.20.189:3000",
+            "port": 3000
+          }
+        ],
+        "pkvault-demo": [
+          {
+            "type": "web",
+            "scope": "wan",
+            "appSlug": "pkvault-demo",
+            "address": "https://pkvault-demo.homelab.io",
+            "href": "https://pkvault-demo.homelab.io",
+            "port": 5974
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "pkvault-demo",
+            "address": "appserver.homelab.lan",
+            "href": "http://appserver.homelab.lan:5974",
+            "port": 5974
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "pkvault-demo",
+            "address": "100.100.100.8",
+            "href": "http://100.100.100.8:5974",
+            "port": 5974
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "pkvault-demo",
+            "address": "192.168.20.189",
+            "href": "http://192.168.20.189:5974",
+            "port": 5974
+          }
+        ],
+        "HOMENET": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "HOMENET",
+            "address": "https://homenet.homelab.io",
+            "href": "https://homenet.homelab.io",
+            "port": 3010
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "HOMENET",
+            "address": "appserver.homelab.lan",
+            "href": "http://appserver.homelab.lan:3010",
+            "port": 3010
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "HOMENET",
+            "address": "100.100.100.8",
+            "href": "http://100.100.100.8:3010",
+            "port": 3010
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "HOMENET",
+            "address": "192.168.20.189",
+            "href": "http://192.168.20.189:3010",
+            "port": 3010
+          }
+        ],
+        "homenet-public": [
+          {
+            "type": "web",
+            "scope": "wan",
+            "appSlug": "homenet-public",
+            "address": "https://homenet-public.homelab.io",
+            "href": "https://homenet-public.homelab.io",
+            "port": 9647
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "homenet-public",
+            "address": "appserver.homelab.lan",
+            "href": "http://appserver.homelab.lan:9647",
+            "port": 9647
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "homenet-public",
+            "address": "100.100.100.8",
+            "href": "http://100.100.100.8:9647",
+            "port": 9647
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "homenet-public",
+            "address": "192.168.20.189",
+            "href": "http://192.168.20.189:9647",
+            "port": 9647
+          }
+        ],
+        "timeflies": [
+          {
+            "type": "web",
+            "scope": "wan",
+            "appSlug": "timeflies",
+            "address": "https://timeflies.homelab.io",
+            "href": "https://timeflies.homelab.io",
+            "port": 8448
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "timeflies",
+            "address": "appserver.homelab.lan",
+            "href": "http://appserver.homelab.lan:8448",
+            "port": 8448
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "timeflies",
+            "address": "100.100.100.8",
+            "href": "http://100.100.100.8:8448",
+            "port": 8448
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "timeflies",
+            "address": "192.168.20.189",
+            "href": "http://192.168.20.189:8448",
+            "port": 8448
+          }
+        ]
+      }
+    },
+    "nogent-desktop": {
+      "id": "nogent-desktop",
+      "addressList": [
+        {
+          "type": "address-only",
+          "scope": "lan",
+          "address": "192.168.20.147"
+        },
+        {
+          "type": "address-only",
+          "scope": "vpn",
+          "address": "100.100.100.2"
+        }
+      ],
+      "lan": "192.168.20.147",
+      "vpn": "100.100.100.2",
+      "os": [],
+      "apps": {
+        "UNRECOGNIZED": [],
+        "sunshine": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "sunshine",
+            "address": "desktop.homelab.lan",
+            "href": "https://desktop.homelab.lan:47990",
+            "ssl": true,
+            "port": 47990
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "sunshine",
+            "address": "100.100.100.2",
+            "href": "https://100.100.100.2:47990",
+            "ssl": true,
+            "port": 47990
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "sunshine",
+            "address": "192.168.20.147",
+            "href": "https://192.168.20.147:47990",
+            "ssl": true,
+            "port": 47990
+          }
+        ]
+      }
+    },
+    "boissy-livebox": {
+      "id": "boissy-livebox",
+      "addressList": [
+        {
+          "type": "address-only",
+          "scope": "lan",
+          "address": "192.168.5.1"
+        },
+        {
+          "type": "address-only",
+          "scope": "wan",
+          "address": "187.45.120.5"
+        }
+      ],
+      "lan": "192.168.5.1",
+      "wan": "187.45.120.5",
+      "os": [],
+      "apps": {
+        "UNRECOGNIZED": [],
+        "boissy-livebox-admin-ui": [
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "boissy-livebox-admin-ui",
+            "address": "192.168.5.1",
+            "href": "https://192.168.5.1:12475",
+            "ssl": true,
+            "port": 12475
+          }
+        ]
+      }
+    },
+    "boissy-desktop": {
+      "id": "boissy-desktop",
+      "addressList": [
+        {
+          "type": "address-only",
+          "scope": "lan",
+          "address": "192.168.5.16"
+        },
+        {
+          "type": "address-only",
+          "scope": "vpn",
+          "address": "100.100.100.6"
+        }
+      ],
+      "lan": "192.168.5.16",
+      "vpn": "100.100.100.6",
+      "os": [],
+      "apps": {
+        "UNRECOGNIZED": []
+      }
+    }
+  }
+}

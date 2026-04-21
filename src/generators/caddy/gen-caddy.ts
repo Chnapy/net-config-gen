@@ -10,6 +10,7 @@ export const genCaddySchema = z.object({
         Caddyfile: z.string().nonempty(),
     }),
     email: z.email(),
+    domains: z.array(z.string().nonempty()),
 });
 export type GenCaddyOptions = z.infer<typeof genCaddySchema>;
 
@@ -25,7 +26,7 @@ export const genCaddy = async (
         network.peers.forEach((peer) => {
             const checkService = (service: ServiceSchema) => {
                 service.access?.forEach((access) => {
-                    if (access.type === "http" && access.domain && service.vpn_ip) {
+                    if (access.type === "http" && access.domain) {
                         const domain = access.domain.startsWith("https://")
                             ? access.domain.slice(8)
                             : access.domain;
@@ -34,6 +35,10 @@ export const genCaddy = async (
                         const domainEnd = domainParts.pop()!;
                         const [ domainBase, ...pathParts ] = domainEnd.split("/");
 
+                        if (!options.domains.some(d => domainBase.endsWith(d))) {
+                            return;
+                        }
+
                         const domainFinal = [ domainParts[ 0 ], domainBase ]
                             .filter(Boolean)
                             .join("://");
@@ -41,11 +46,10 @@ export const genCaddy = async (
                             pathParts.length > 0 ? path.join("/", ...pathParts, "*") : "";
 
                         const restrictedIPSubnets = access.expose_outside_vpn
-                            ? undefined
+                            ? []
                             : Array.from(
                                 new Set(
                                     [
-                                        generatorService.lan_ip,
                                         generatorService.vpn_ip,
                                         service.vpn_ip,
                                         peer.vpn_ip,
@@ -59,31 +63,43 @@ export const genCaddy = async (
                                 ),
                             );
 
-                        const restrictedSnippetKey = restrictedIPSubnets?.join(" ");
-                        if (
-                            restrictedSnippetKey &&
-                            !restrictedSnippets[ restrictedSnippetKey ]
-                        ) {
+                        const getRestrictedSnippet = () => {
+                            if (restrictedIPSubnets.length === 0) {
+                                return;
+                            }
+                            const restrictedSnippetKey = restrictedIPSubnets.join(" ");
+
+                            if (restrictedSnippets[ restrictedSnippetKey ]) {
+                                return restrictedSnippets[ restrictedSnippetKey ];
+                            }
+
+                            const existingSnippet = Object.values(restrictedSnippets).find(snip => restrictedIPSubnets.every(sub => snip.ipSubnets.includes(sub)));
+                            if (existingSnippet) {
+                                return existingSnippet;
+                            }
+
                             const snippetsLength = Object.values(restrictedSnippets).length;
-                            restrictedSnippets[ restrictedSnippetKey ] = {
+                            const snippet = {
                                 name: snippetsLength
                                     ? `restricted-${snippetsLength}`
                                     : "restricted",
-                                ipSubnets: restrictedIPSubnets!,
+                                ipSubnets: restrictedIPSubnets,
                             };
-                        }
+                            restrictedSnippets[ restrictedSnippetKey ] = snippet;
+                            return snippet;
+                        };
+
+                        const snippet = getRestrictedSnippet();
 
                         const entry = entries[ domainFinal ] ?? {
                             domain: domainFinal,
-                            snippetName: restrictedSnippetKey
-                                ? restrictedSnippets[ restrictedSnippetKey ].name
-                                : undefined,
+                            snippetName: snippet?.name,
                             paths: [],
                         };
 
                         entry.paths.push({
                             path: pathFinal,
-                            ip: service.vpn_ip,
+                            ip: service.vpn_ip ?? service.lan_ip!,
                             port: access.internal_port ?? access.port,
                             ssl: access.ssl ?? false,
                         });

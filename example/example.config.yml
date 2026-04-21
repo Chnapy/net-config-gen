@@ -56,6 +56,9 @@ networks:
               paths:
                 Caddyfile: generated/vps/network/caddy/Caddyfile
               email: example@mail.com
+              domains:
+                - homelab.lan
+                - homelab.io
           - id: dnsmasq
             name: Dnsmasq DNS
             icon: https://dnsmasq.org/images/icon.png

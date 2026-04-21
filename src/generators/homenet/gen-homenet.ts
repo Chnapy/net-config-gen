@@ -5,7 +5,7 @@ import type { AccessSchema, MainSchema, ServiceSchema } from '../../schema.ts';
 export const genHomenetSchema = z.object({
     type: z.literal('homenet'),
     safeMode: z.boolean().optional(),
-    themes: z.array(z.enum([ "default", "mauve", "blue", "green", "yellow" ])).optional(),
+    themes: z.array(z.enum<Theme[]>([ "default", "mauve", "blue", "green", "yellow" ])).optional(),
     paths: z.object({
         "devices.json": z.string().nonempty(),
         "metadata.json": z.string().nonempty().optional(),
@@ -14,7 +14,8 @@ export const genHomenetSchema = z.object({
 export type GenHomenetOptions = z.infer<typeof genHomenetSchema>;
 
 type UserMetadata = operations[ 'getDevicesUserMetadata' ][ 'responses' ][ '200' ][ 'content' ][ 'application/json' ][ 'result' ][ 'data' ];
-// type Metadata = UserMetadata[ string ];
+type Metadata = UserMetadata[ string ];
+type Theme = Metadata[ 'theme' ];
 
 type Device = GetDeviceFull[ 'deviceList' ][ number ];
 type Instance = GetDeviceFull[ 'instanceList' ][ number ];

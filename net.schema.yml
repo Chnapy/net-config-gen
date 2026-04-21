@@ -248,12 +248,18 @@ $defs:
                 type: string
                 format: email
                 pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+              domains:
+                type: array
+                items:
+                  type: string
+                  minLength: 1
               anonymize_network:
                 type: boolean
             required:
               - type
               - paths
               - email
+              - domains
             additionalProperties: false
           - type: object
             properties:

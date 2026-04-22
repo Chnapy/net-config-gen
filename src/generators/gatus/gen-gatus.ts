@@ -266,7 +266,7 @@ export const genGatus = async (generatorService: ServiceSchema, networks: MainSc
                     'service'
                 ));
 
-                if (options.mode === 'all' || !service.access?.length) {
+                if ((options.mode === 'all' || !service.access?.length) && service.access?.length) {
                     addSimilarEndpoints([
                         service.domain && {
                             scope: 'service',
@@ -338,7 +338,15 @@ export const genGatus = async (generatorService: ServiceSchema, networks: MainSc
 
             peer.access?.forEach(access => addAccess(peer.name, peer, access, 'peer'));
 
-            if (options.mode === 'all' || (!peer.services?.length && !peer.access?.length)) {
+            const peerAccesses = [
+                ...peer.access ?? [],
+                ...peer.services?.flatMap(service => [
+                    ...service.access ?? [],
+                    ...service.services?.flatMap(s => s.access ?? []) ?? [],
+                ]) ?? [],
+            ];
+
+            if (options.mode === 'all' || peerAccesses.length === 0) {
                 addSimilarEndpoints([
                     peer.domain && {
                         scope: 'peer',

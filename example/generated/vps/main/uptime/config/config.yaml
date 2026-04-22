@@ -205,16 +205,6 @@ endpoints:
         failure-threshold: 3
         success-threshold: 1
   - group: Appserver
-    name: Appserver ICMP [s/host]
-    url: icmp://appserver.homelab.lan
-    interval: 5m
-    conditions:
-      - "[CONNECTED] == true"
-    alerts:
-      - type: ntfy
-        failure-threshold: 3
-        success-threshold: 1
-  - group: Appserver
     name: Syncthing HTTPS [s/doma]
     url: https://syncthing.homelab.io
     interval: 5m

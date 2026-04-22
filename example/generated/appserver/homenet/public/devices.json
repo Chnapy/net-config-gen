@@ -6,7 +6,7 @@
       "type": "DOCKER",
       "os": "UNRECOGNIZED",
       "wan": "156.47.214.99",
-      "ddns": "hidden.domain.me",
+      "ddns": "tree.vps.ovh.net",
       "lan": "192.168.17.42",
       "dhcp": [],
       "ssh": {
@@ -26,7 +26,7 @@
       "type": "DEVICE",
       "os": "UNRECOGNIZED",
       "wan": "210.213.142.8",
-      "ddns": "hidden.domain.me",
+      "ddns": "phone.glddns.com",
       "lan": "192.168.54.1",
       "dhcp": [],
       "web": [],
@@ -150,10 +150,25 @@
       }
     },
     {
+      "parentId": "nogent-router",
+      "id": "nogent-router-admin-ui",
+      "slug": "nogent-router-admin-ui",
+      "vpnMode": "UNRECOGNIZED",
+      "vpnClients": [],
+      "reverseProxy": [],
+      "web": [],
+      "meta": {
+        "name": "Router admin UI",
+        "description": "gl.inet router admin interface",
+        "icon": "glinet"
+      }
+    },
+    {
       "parentId": "appserver",
       "id": "pkvault-demo",
       "slug": "pkvault-demo",
-      "vpnMode": "UNRECOGNIZED",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "164.23.11.8",
       "vpnClients": [],
       "reverseProxy": [],
       "web": [],
@@ -167,7 +182,8 @@
       "parentId": "appserver",
       "id": "homenet-public",
       "slug": "HOMENET",
-      "vpnMode": "UNRECOGNIZED",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "164.23.11.8",
       "vpnClients": [],
       "reverseProxy": [],
       "web": [],
@@ -181,7 +197,8 @@
       "parentId": "appserver",
       "id": "timeflies",
       "slug": "timeflies",
-      "vpnMode": "UNRECOGNIZED",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "164.23.11.8",
       "vpnClients": [],
       "reverseProxy": [],
       "web": [],
@@ -209,7 +226,16 @@
         "192.168.17.9",
         "164.23.11.4",
         "164.23.11.5",
-        "164.23.11.8"
+        "164.23.11.5",
+        "164.23.11.5",
+        "164.23.11.8",
+        "164.23.11.8",
+        "164.23.11.8",
+        "164.23.11.8",
+        "164.23.11.8",
+        "164.23.11.8",
+        "164.23.11.8",
+        "164.23.11.2"
       ],
       "reverseProxy": [],
       "web": [],
@@ -229,19 +255,8 @@
       "reverseProxy": [
         {
           "fromDomain": {
-            "domain": "wg.homelab.io",
-            "ssl": false
-          },
-          "toAddress": {
-            "address": "192.168.17.42",
-            "ssl": false,
-            "port": 51820
-          }
-        },
-        {
-          "fromDomain": {
-            "domain": "hidden.domain.me",
-            "ssl": false
+            "domain": "https://minimum.mkstats.hidden",
+            "ssl": true
           },
           "toAddress": {
             "address": "192.168.17.42",
@@ -251,8 +266,8 @@
         },
         {
           "fromDomain": {
-            "domain": "hidden.domain.me",
-            "ssl": false
+            "domain": "https://add.mkstats.hidden/v2/",
+            "ssl": true
           },
           "toAddress": {
             "address": "192.168.17.6",
@@ -262,8 +277,8 @@
         },
         {
           "fromDomain": {
-            "domain": "hidden.domain.me",
-            "ssl": false
+            "domain": "https://add.mkstats.hidden",
+            "ssl": true
           },
           "toAddress": {
             "address": "192.168.17.4",
@@ -273,8 +288,8 @@
         },
         {
           "fromDomain": {
-            "domain": "hidden.domain.me",
-            "ssl": false
+            "domain": "https://vfs.mkstats.hidden",
+            "ssl": true
           },
           "toAddress": {
             "address": "192.168.17.5",
@@ -284,8 +299,8 @@
         },
         {
           "fromDomain": {
-            "domain": "hidden.domain.me",
-            "ssl": false
+            "domain": "https://put.mkstats.hidden",
+            "ssl": true
           },
           "toAddress": {
             "address": "192.168.17.3",
@@ -295,8 +310,8 @@
         },
         {
           "fromDomain": {
-            "domain": "hidden.domain.me",
-            "ssl": false
+            "domain": "https://device.mkstats.hidden",
+            "ssl": true
           },
           "toAddress": {
             "address": "192.168.17.7",
@@ -306,8 +321,8 @@
         },
         {
           "fromDomain": {
-            "domain": "hidden.domain.me",
-            "ssl": false
+            "domain": "https://directories.mkstats.hidden",
+            "ssl": true
           },
           "toAddress": {
             "address": "192.168.17.8",
@@ -328,18 +343,8 @@
         },
         {
           "fromDomain": {
-            "domain": "https://ss78e96.glddns.com",
+            "domain": "https://uploader.mkstats.hidden",
             "ssl": true
-          },
-          "toAddress": {
-            "ssl": false,
-            "port": 443
-          }
-        },
-        {
-          "fromDomain": {
-            "domain": "hidden.domain.me",
-            "ssl": false
           },
           "toAddress": {
             "address": "164.23.11.4",
@@ -349,8 +354,8 @@
         },
         {
           "fromDomain": {
-            "domain": "hidden.domain.me",
-            "ssl": false
+            "domain": "https://pic.mkstats.hidden",
+            "ssl": true
           },
           "toAddress": {
             "address": "164.23.11.5",
@@ -360,40 +365,44 @@
         },
         {
           "fromDomain": {
-            "domain": "hidden.domain.me",
-            "ssl": false
+            "domain": "https://backend.mkstats.hidden",
+            "ssl": true
           },
           "toAddress": {
+            "address": "164.23.11.5",
             "ssl": false,
             "port": 1880
           }
         },
         {
           "fromDomain": {
-            "domain": "hidden.domain.me",
-            "ssl": false
+            "domain": "https://technology.mkstats.hidden",
+            "ssl": true
           },
           "toAddress": {
+            "address": "164.23.11.5",
             "ssl": false,
             "port": 8099
           }
         },
         {
           "fromDomain": {
-            "domain": "hidden.domain.me",
-            "ssl": false
+            "domain": "https://weblogic.mkstats.hidden",
+            "ssl": true
           },
           "toAddress": {
+            "address": "164.23.11.8",
             "ssl": false,
             "port": 8384
           }
         },
         {
           "fromDomain": {
-            "domain": "hidden.domain.me",
-            "ssl": false
+            "domain": "https://vbscript.mkstats.hidden",
+            "ssl": true
           },
           "toAddress": {
+            "address": "164.23.11.8",
             "ssl": false,
             "port": 3000
           }
@@ -404,16 +413,18 @@
             "ssl": true
           },
           "toAddress": {
+            "address": "164.23.11.8",
             "ssl": false,
             "port": 5974
           }
         },
         {
           "fromDomain": {
-            "domain": "hidden.domain.me",
-            "ssl": false
+            "domain": "https://cmd.mkstats.hidden",
+            "ssl": true
           },
           "toAddress": {
+            "address": "164.23.11.8",
             "ssl": false,
             "port": 3010
           }
@@ -424,6 +435,7 @@
             "ssl": true
           },
           "toAddress": {
+            "address": "164.23.11.8",
             "ssl": false,
             "port": 9647
           }
@@ -434,6 +446,7 @@
             "ssl": true
           },
           "toAddress": {
+            "address": "164.23.11.8",
             "ssl": false,
             "port": 8448
           }
@@ -552,20 +565,6 @@
       }
     },
     {
-      "parentId": "nogent-router",
-      "id": "nogent-router-admin-ui",
-      "slug": "nogent-router-admin-ui",
-      "vpnMode": "UNRECOGNIZED",
-      "vpnClients": [],
-      "reverseProxy": [],
-      "web": [],
-      "meta": {
-        "name": "Router admin UI",
-        "description": "gl.inet router admin interface",
-        "icon": "glinet"
-      }
-    },
-    {
       "parentId": "homelab",
       "id": "proxmox-host",
       "slug": "proxmox-host",
@@ -584,7 +583,8 @@
       "parentId": "home-assistant",
       "id": "node-red",
       "slug": "node-red",
-      "vpnMode": "UNRECOGNIZED",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "164.23.11.5",
       "vpnClients": [],
       "reverseProxy": [],
       "web": [],
@@ -598,7 +598,8 @@
       "parentId": "home-assistant",
       "id": "zigbee2mqtt",
       "slug": "zigbee2mqtt",
-      "vpnMode": "UNRECOGNIZED",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "164.23.11.5",
       "vpnClients": [],
       "reverseProxy": [],
       "web": [],
@@ -612,7 +613,8 @@
       "parentId": "appserver",
       "id": "syncthing",
       "slug": "syncthing",
-      "vpnMode": "UNRECOGNIZED",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "164.23.11.8",
       "vpnClients": [],
       "reverseProxy": [],
       "web": [],
@@ -626,7 +628,8 @@
       "parentId": "appserver",
       "id": "pkvault",
       "slug": "pkvault",
-      "vpnMode": "UNRECOGNIZED",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "164.23.11.8",
       "vpnClients": [],
       "reverseProxy": [],
       "web": [],
@@ -640,7 +643,8 @@
       "parentId": "appserver",
       "id": "homenet",
       "slug": "homenet",
-      "vpnMode": "UNRECOGNIZED",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "164.23.11.8",
       "vpnClients": [],
       "reverseProxy": [],
       "web": [],
@@ -654,7 +658,8 @@
       "parentId": "nogent-desktop",
       "id": "sunshine",
       "slug": "sunshine",
-      "vpnMode": "UNRECOGNIZED",
+      "vpnMode": "CLIENT",
+      "vpnAddress": "164.23.11.2",
       "vpnClients": [],
       "reverseProxy": [],
       "web": [],
@@ -702,12 +707,12 @@
         {
           "type": "address-only",
           "scope": "dns-domain",
-          "address": "hidden.domain.me"
+          "address": "tree.vps.ovh.net"
         }
       ],
       "lan": "192.168.17.42",
       "wan": "156.47.214.99",
-      "ddns": "hidden.domain.me",
+      "ddns": "tree.vps.ovh.net",
       "vpn": "164.23.11.1",
       "os": [],
       "apps": {
@@ -733,15 +738,246 @@
       "os": [],
       "apps": {
         "DOCKER": [],
-        "WIREGUARD": [],
+        "WIREGUARD": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "WIREGUARD",
+            "address": "https://minimum.mkstats.hidden",
+            "href": "https://minimum.mkstats.hidden",
+            "port": 100
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "WIREGUARD",
+            "address": "formupdate.can.hidden",
+            "href": "http://formupdate.can.hidden:100",
+            "port": 100
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "WIREGUARD",
+            "address": "192.168.17.42",
+            "href": "http://192.168.17.42:100",
+            "port": 100
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "WIREGUARD",
+            "address": "192.168.17.42",
+            "href": "http://192.168.17.42:100",
+            "port": 100
+          }
+        ],
         "caddy": [],
         "dnsmasq": [],
-        "registry": [],
-        "registry-ui": [],
-        "ntfy": [],
-        "uptime": [],
-        "uptime-all": [],
-        "homepage": [],
+        "registry": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "registry",
+            "address": "https://add.mkstats.hidden/v2/",
+            "href": "https://add.mkstats.hidden/v2/",
+            "port": 5000
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "registry",
+            "address": "asia.can.hidden",
+            "href": "http://asia.can.hidden:5000",
+            "port": 5000
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "registry",
+            "address": "192.168.17.6",
+            "href": "http://192.168.17.6:5000",
+            "port": 5000
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "registry",
+            "address": "192.168.17.6",
+            "href": "http://192.168.17.6:5000",
+            "port": 5000
+          }
+        ],
+        "registry-ui": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "registry-ui",
+            "address": "https://add.mkstats.hidden",
+            "href": "https://add.mkstats.hidden",
+            "port": 80
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "registry-ui",
+            "address": "smile.can.hidden",
+            "href": "http://smile.can.hidden",
+            "port": 80
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "registry-ui",
+            "address": "192.168.17.4",
+            "href": "http://192.168.17.4",
+            "port": 80
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "registry-ui",
+            "address": "192.168.17.4",
+            "href": "http://192.168.17.4",
+            "port": 80
+          }
+        ],
+        "ntfy": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "ntfy",
+            "address": "https://vfs.mkstats.hidden",
+            "href": "https://vfs.mkstats.hidden",
+            "port": 8080
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "ntfy",
+            "address": "formsend.can.hidden",
+            "href": "http://formsend.can.hidden:8080",
+            "port": 8080
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "ntfy",
+            "address": "192.168.17.5",
+            "href": "http://192.168.17.5:8080",
+            "port": 8080
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "ntfy",
+            "address": "192.168.17.5",
+            "href": "http://192.168.17.5:8080",
+            "port": 8080
+          }
+        ],
+        "uptime": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "uptime",
+            "address": "https://put.mkstats.hidden",
+            "href": "https://put.mkstats.hidden",
+            "port": 8080
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "uptime",
+            "address": "stats.can.hidden",
+            "href": "http://stats.can.hidden:8080",
+            "port": 8080
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "uptime",
+            "address": "192.168.17.3",
+            "href": "http://192.168.17.3:8080",
+            "port": 8080
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "uptime",
+            "address": "192.168.17.3",
+            "href": "http://192.168.17.3:8080",
+            "port": 8080
+          }
+        ],
+        "uptime-all": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "uptime-all",
+            "address": "https://device.mkstats.hidden",
+            "href": "https://device.mkstats.hidden",
+            "port": 8080
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "uptime-all",
+            "address": "comics.can.hidden",
+            "href": "http://comics.can.hidden:8080",
+            "port": 8080
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "uptime-all",
+            "address": "192.168.17.7",
+            "href": "http://192.168.17.7:8080",
+            "port": 8080
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "uptime-all",
+            "address": "192.168.17.7",
+            "href": "http://192.168.17.7:8080",
+            "port": 8080
+          }
+        ],
+        "homepage": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "homepage",
+            "address": "https://directories.mkstats.hidden",
+            "href": "https://directories.mkstats.hidden",
+            "port": 3000
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "homepage",
+            "address": "sendmessage.can.hidden",
+            "href": "http://sendmessage.can.hidden:3000",
+            "port": 3000
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "homepage",
+            "address": "192.168.17.8",
+            "href": "http://192.168.17.8:3000",
+            "port": 3000
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "homepage",
+            "address": "192.168.17.8",
+            "href": "http://192.168.17.8:3000",
+            "port": 3000
+          }
+        ],
         "homepage-public": [
           {
             "type": "web",
@@ -755,8 +991,8 @@
             "type": "web",
             "scope": "vpn",
             "appSlug": "homepage-public",
-            "address": "hidden.domain.me",
-            "href": "http://hidden.domain.me:4851",
+            "address": "names.can.hidden",
+            "href": "http://names.can.hidden:4851",
             "port": 4851
           },
           {
@@ -794,16 +1030,33 @@
         {
           "type": "address-only",
           "scope": "dns-domain",
-          "address": "hidden.domain.me"
+          "address": "phone.glddns.com"
         }
       ],
       "lan": "192.168.54.1",
       "wan": "210.213.142.8",
-      "ddns": "hidden.domain.me",
+      "ddns": "phone.glddns.com",
       "os": [],
       "apps": {
         "UNRECOGNIZED": [],
-        "nogent-router-admin-ui": []
+        "nogent-router-admin-ui": [
+          {
+            "type": "web",
+            "scope": "wan",
+            "appSlug": "nogent-router-admin-ui",
+            "address": "https://ss78e96.glddns.com",
+            "href": "https://ss78e96.glddns.com",
+            "port": 443
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "nogent-router-admin-ui",
+            "address": "192.168.54.1",
+            "href": "https://192.168.54.1",
+            "port": 443
+          }
+        ]
       }
     },
     "homelab": {
@@ -819,7 +1072,68 @@
       "os": [],
       "apps": {
         "PROXMOX": [],
-        "proxmox-host": []
+        "proxmox-host": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "proxmox-host",
+            "address": "https://uploader.mkstats.hidden",
+            "href": "https://uploader.mkstats.hidden",
+            "ssl": true,
+            "port": 8006
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "proxmox-host",
+            "address": "link.can.hidden",
+            "href": "https://link.can.hidden:8006",
+            "ssl": true,
+            "port": 8006
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "proxmox-host",
+            "address": "164.23.11.4",
+            "href": "https://164.23.11.4:8006",
+            "ssl": true,
+            "port": 8006
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "proxmox-host",
+            "address": "192.168.54.138",
+            "href": "https://192.168.54.138:8006",
+            "ssl": true,
+            "port": 8006
+          },
+          {
+            "type": "ssh",
+            "scope": "vpn",
+            "appSlug": "proxmox-host",
+            "address": "link.can.hidden",
+            "href": "ssh://link.can.hidden",
+            "port": 22
+          },
+          {
+            "type": "ssh",
+            "scope": "vpn",
+            "appSlug": "proxmox-host",
+            "address": "164.23.11.4",
+            "href": "ssh://164.23.11.4",
+            "port": 22
+          },
+          {
+            "type": "ssh",
+            "scope": "lan",
+            "appSlug": "proxmox-host",
+            "address": "192.168.54.138",
+            "href": "ssh://192.168.54.138",
+            "port": 22
+          }
+        ]
       }
     },
     "home-assistant": {
@@ -838,11 +1152,127 @@
       ],
       "lan": "192.168.54.206",
       "vpn": "164.23.11.5",
-      "os": [],
+      "os": [
+        {
+          "type": "web",
+          "scope": "vpn",
+          "address": "https://pic.mkstats.hidden",
+          "href": "https://pic.mkstats.hidden",
+          "port": 8123
+        },
+        {
+          "type": "web",
+          "scope": "wan",
+          "address": "route.can.hidden",
+          "href": "http://route.can.hidden:8123",
+          "port": 8123
+        },
+        {
+          "type": "web",
+          "scope": "vpn",
+          "address": "164.23.11.5",
+          "href": "http://164.23.11.5:8123",
+          "port": 8123
+        },
+        {
+          "type": "web",
+          "scope": "lan",
+          "address": "192.168.54.206",
+          "href": "http://192.168.54.206:8123",
+          "port": 8123
+        },
+        {
+          "type": "ssh",
+          "scope": "wan",
+          "address": "route.can.hidden",
+          "href": "ssh://route.can.hidden:8124",
+          "port": 8124
+        },
+        {
+          "type": "ssh",
+          "scope": "vpn",
+          "address": "164.23.11.5",
+          "href": "ssh://164.23.11.5:8124",
+          "port": 8124
+        },
+        {
+          "type": "ssh",
+          "scope": "lan",
+          "address": "192.168.54.206",
+          "href": "ssh://192.168.54.206:8124",
+          "port": 8124
+        }
+      ],
       "apps": {
         "PROXMOX": [],
-        "node-red": [],
-        "zigbee2mqtt": []
+        "node-red": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "node-red",
+            "address": "https://backend.mkstats.hidden",
+            "href": "https://backend.mkstats.hidden",
+            "port": 1880
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "node-red",
+            "address": "route.can.hidden",
+            "href": "http://route.can.hidden:1880",
+            "port": 1880
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "node-red",
+            "address": "164.23.11.5",
+            "href": "http://164.23.11.5:1880",
+            "port": 1880
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "node-red",
+            "address": "192.168.54.206",
+            "href": "http://192.168.54.206:1880",
+            "port": 1880
+          }
+        ],
+        "zigbee2mqtt": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "zigbee2mqtt",
+            "address": "https://technology.mkstats.hidden",
+            "href": "https://technology.mkstats.hidden",
+            "port": 8099
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "zigbee2mqtt",
+            "address": "route.can.hidden",
+            "href": "http://route.can.hidden:8099",
+            "port": 8099
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "zigbee2mqtt",
+            "address": "164.23.11.5",
+            "href": "http://164.23.11.5:8099",
+            "port": 8099
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "zigbee2mqtt",
+            "address": "192.168.54.206",
+            "href": "http://192.168.54.206:8099",
+            "port": 8099
+          }
+        ]
       }
     },
     "appserver": {
@@ -864,8 +1294,74 @@
       "os": [],
       "apps": {
         "PROXMOX": [],
-        "syncthing": [],
-        "pkvault": [],
+        "syncthing": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "syncthing",
+            "address": "https://weblogic.mkstats.hidden",
+            "href": "https://weblogic.mkstats.hidden",
+            "port": 8384
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "syncthing",
+            "address": "inc.can.hidden",
+            "href": "http://inc.can.hidden:8384",
+            "port": 8384
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "syncthing",
+            "address": "164.23.11.8",
+            "href": "http://164.23.11.8:8384",
+            "port": 8384
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "syncthing",
+            "address": "192.168.54.189",
+            "href": "http://192.168.54.189:8384",
+            "port": 8384
+          }
+        ],
+        "pkvault": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "pkvault",
+            "address": "https://vbscript.mkstats.hidden",
+            "href": "https://vbscript.mkstats.hidden",
+            "port": 3000
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "pkvault",
+            "address": "inc.can.hidden",
+            "href": "http://inc.can.hidden:3000",
+            "port": 3000
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "pkvault",
+            "address": "164.23.11.8",
+            "href": "http://164.23.11.8:3000",
+            "port": 3000
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "pkvault",
+            "address": "192.168.54.189",
+            "href": "http://192.168.54.189:3000",
+            "port": 3000
+          }
+        ],
         "pkvault-demo": [
           {
             "type": "web",
@@ -874,9 +1370,66 @@
             "address": "https://pkvault-demo.homelab.io",
             "href": "https://pkvault-demo.homelab.io",
             "port": 5974
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "pkvault-demo",
+            "address": "inc.can.hidden",
+            "href": "http://inc.can.hidden:5974",
+            "port": 5974
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "pkvault-demo",
+            "address": "164.23.11.8",
+            "href": "http://164.23.11.8:5974",
+            "port": 5974
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "pkvault-demo",
+            "address": "192.168.54.189",
+            "href": "http://192.168.54.189:5974",
+            "port": 5974
           }
         ],
-        "homenet": [],
+        "homenet": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "homenet",
+            "address": "https://cmd.mkstats.hidden",
+            "href": "https://cmd.mkstats.hidden",
+            "port": 3010
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "homenet",
+            "address": "inc.can.hidden",
+            "href": "http://inc.can.hidden:3010",
+            "port": 3010
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "homenet",
+            "address": "164.23.11.8",
+            "href": "http://164.23.11.8:3010",
+            "port": 3010
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "homenet",
+            "address": "192.168.54.189",
+            "href": "http://192.168.54.189:3010",
+            "port": 3010
+          }
+        ],
         "HOMENET": [
           {
             "type": "web",
@@ -884,6 +1437,30 @@
             "appSlug": "HOMENET",
             "address": "https://homenet-public.homelab.io",
             "href": "https://homenet-public.homelab.io",
+            "port": 9647
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "HOMENET",
+            "address": "inc.can.hidden",
+            "href": "http://inc.can.hidden:9647",
+            "port": 9647
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "HOMENET",
+            "address": "164.23.11.8",
+            "href": "http://164.23.11.8:9647",
+            "port": 9647
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "HOMENET",
+            "address": "192.168.54.189",
+            "href": "http://192.168.54.189:9647",
             "port": 9647
           }
         ],
@@ -894,6 +1471,30 @@
             "appSlug": "timeflies",
             "address": "https://timeflies.homelab.io",
             "href": "https://timeflies.homelab.io",
+            "port": 8448
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "timeflies",
+            "address": "inc.can.hidden",
+            "href": "http://inc.can.hidden:8448",
+            "port": 8448
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "timeflies",
+            "address": "164.23.11.8",
+            "href": "http://164.23.11.8:8448",
+            "port": 8448
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "timeflies",
+            "address": "192.168.54.189",
+            "href": "http://192.168.54.189:8448",
             "port": 8448
           }
         ]
@@ -918,7 +1519,35 @@
       "os": [],
       "apps": {
         "UNRECOGNIZED": [],
-        "sunshine": []
+        "sunshine": [
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "sunshine",
+            "address": "libs.can.hidden",
+            "href": "https://libs.can.hidden:47990",
+            "ssl": true,
+            "port": 47990
+          },
+          {
+            "type": "web",
+            "scope": "vpn",
+            "appSlug": "sunshine",
+            "address": "164.23.11.2",
+            "href": "https://164.23.11.2:47990",
+            "ssl": true,
+            "port": 47990
+          },
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "sunshine",
+            "address": "192.168.54.147",
+            "href": "https://192.168.54.147:47990",
+            "ssl": true,
+            "port": 47990
+          }
+        ]
       }
     },
     "boissy-livebox": {
@@ -940,7 +1569,17 @@
       "os": [],
       "apps": {
         "UNRECOGNIZED": [],
-        "boissy-livebox-admin-ui": []
+        "boissy-livebox-admin-ui": [
+          {
+            "type": "web",
+            "scope": "lan",
+            "appSlug": "boissy-livebox-admin-ui",
+            "address": "192.168.34.1",
+            "href": "https://192.168.34.1:12475",
+            "ssl": true,
+            "port": 12475
+          }
+        ]
       }
     },
     "boissy-desktop": {

@@ -180,17 +180,6 @@
       "reverseProxy": [
         {
           "fromDomain": {
-            "domain": "wg.homelab.io",
-            "ssl": false
-          },
-          "toAddress": {
-            "address": "10.0.0.42",
-            "ssl": false,
-            "port": 51820
-          }
-        },
-        {
-          "fromDomain": {
             "domain": "https://wg.homelab.io",
             "ssl": true
           },
@@ -275,17 +264,6 @@
             "address": "10.0.0.9",
             "ssl": false,
             "port": 4851
-          }
-        },
-        {
-          "fromDomain": {
-            "domain": "https://ss78e96.glddns.com",
-            "ssl": true
-          },
-          "toAddress": {
-            "address": "192.168.20.1",
-            "ssl": false,
-            "port": 443
           }
         },
         {

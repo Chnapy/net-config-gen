@@ -491,18 +491,6 @@ endpoints:
     conditions:
       - "[STATUS] == 200"
   - group: Appserver
-    name: icmp://appserver.homelab.lan [s/host]
-    url: icmp://appserver.homelab.lan
-    interval: 15m
-    conditions:
-      - "[CONNECTED] == true"
-  - group: Appserver
-    name: icmp://100.100.100.8 [s/vpn]
-    url: icmp://100.100.100.8
-    interval: 15m
-    conditions:
-      - "[CONNECTED] == true"
-  - group: Appserver
     name: https://syncthing.homelab.io [s/doma]
     url: https://syncthing.homelab.io
     interval: 15m
@@ -520,6 +508,18 @@ endpoints:
     interval: 15m
     conditions:
       - "[STATUS] == 200"
+  - group: Appserver
+    name: icmp://appserver.homelab.lan [s/host]
+    url: icmp://appserver.homelab.lan
+    interval: 15m
+    conditions:
+      - "[CONNECTED] == true"
+  - group: Appserver
+    name: icmp://100.100.100.8 [s/vpn]
+    url: icmp://100.100.100.8
+    interval: 15m
+    conditions:
+      - "[CONNECTED] == true"
   - group: Appserver
     name: https://pkvault.homelab.io [s/doma]
     url: https://pkvault.homelab.io

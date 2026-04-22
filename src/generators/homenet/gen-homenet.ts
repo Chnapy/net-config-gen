@@ -1,5 +1,6 @@
 import type { GetDeviceFull, operations } from 'homenet-types';
 import z from 'zod';
+import { getAnonymizedDomainBase } from '../../get-anonymized-network.ts';
 import type { AccessSchema, MainSchema, ServiceSchema } from '../../schema.ts';
 
 export const genHomenetSchema = z.object({
@@ -33,6 +34,14 @@ export const genHomenet = async (generatorService: ServiceSchema, networks: Main
         netEntityMap: {},
     };
     const metadata: UserMetadata = {};
+
+    const reverseProxyDomains = networks
+        .flatMap(network => network.peers)
+        .flatMap(peer => peer.services ?? [])
+        .flatMap(service => [ service, ...service.services ?? [] ])
+        .flatMap(service => service.generator?.type === 'caddy' ? service.generator.domains : []);
+
+    reverseProxyDomains.push(...reverseProxyDomains.map(getAnonymizedDomainBase));
 
     const reverseProxy: App[ 'reverseProxy' ] = [];
     const vpnClients: App[ 'vpnClients' ] = [];
@@ -325,10 +334,6 @@ export const genHomenet = async (generatorService: ServiceSchema, networks: Main
                             return;
                         }
 
-                        if (options.safeMode && (!access.expose_outside_vpn || peer.type == 'router')) {
-                            return;
-                        }
-
                         const type = access.type === 'http' ? 'web' : 'ssh';
 
                         if (access.domain)
@@ -395,10 +400,6 @@ export const genHomenet = async (generatorService: ServiceSchema, networks: Main
                                 return;
                             }
 
-                            if (options.safeMode && (!access.expose_outside_vpn || peer.type == 'router')) {
-                                return;
-                            }
-
                             const type = access.type === 'http' ? 'web' : 'ssh';
 
                             if (access.domain)
@@ -451,7 +452,16 @@ export const genHomenet = async (generatorService: ServiceSchema, networks: Main
 
                 if (service.role !== 'reverse-proxy') {
                     service.access?.forEach(access => {
-                        if (access.domain) {
+                        if (access.domain && access.type === 'http') {
+                            const domainBase = access.domain.split('://').pop()?.split('/')[ 0 ];
+                            if (!domainBase || !reverseProxyDomains.some(d => domainBase.endsWith(d))) {
+                                return;
+                            }
+
+                            if (!service.vpn_ip && !service.lan_ip) {
+                                throw new Error('Missing VPN and LAN IP, service: ' + service.id)
+                            }
+
                             reverseProxy.push({
                                 fromDomain: {
                                     domain: access.domain,

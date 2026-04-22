@@ -101,9 +101,9 @@ export const getAnonymizedNetwork = (mainSchema: MainSchema): MainSchema => {
         return [ newMask, lastPart ].join('.') as V;
     };
 
-    const getAnonymizedAccess = (access: AccessSchema): AccessSchema => cleanObject(access.expose_outside_vpn
+    const getAnonymizedAccess = (access: AccessSchema): AccessSchema => reverseProxyDomains.some(d => access.domain?.includes(d)) && access.expose_outside_vpn
         ? access
-        : {
+        : cleanObject({
             ...access,
             domain: getAnonymizedDomain(access.domain),
         });
